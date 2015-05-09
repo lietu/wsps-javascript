@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WSPS Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css"/>
+</head>
+<body>
+<div id="mocha"></div>
+
+<!-- Libraries -->
+<script src="../node_modules/expect.js/index.js"></script>
+<script src="../node_modules/mocha/mocha.js"></script>
+
+<!-- Source -->
+<script src="../dist/wsps.js"></script>
+
+<!-- Test cases -->
+<script>mocha.setup('bdd')</script>
+<script src="mock.js"></script>
+<script src="live.js"></script>
+<script>
+    mocha.checkLeaks();
+    mocha.globals([]);
+    mocha.run();
+</script>
+</body>
+</html>

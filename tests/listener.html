@@ -1,0 +1,74 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WSPS Listener test</title>
+    <style>
+        .stats {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #000;
+        }
+
+        .label {
+            display: inline-block;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+<h1>Listener for throughput testing</h1>
+<div class="stats">
+    <div class="counter">
+        <span class="label">Messages received:</span>
+        <span id="count">0</span>
+    </div>
+    <div class="timer">
+        <span class="label">Time elapsed:</span>
+        <span id="time">0</span> sec
+    </div>
+    <div class="eps">
+        <span class="label">Messages per second:</span>
+        <span id="eps">0</span>
+    </div>
+</div>
+Last message:
+<div id="results"></div>
+
+<script src="../dist/wsps.js"></script>
+<script>
+    var results = document.getElementById("results");
+    var counter = document.getElementById("count");
+    var time = document.getElementById("time");
+    var eps = document.getElementById("mps");
+
+    var startTime = null;
+    var events = 0;
+
+    var wsps = WSPS.create({
+        server: "ws://localhost:52525",
+        debug: true,
+        onclose: function() {
+            console.log("Lost connection, reconnecting.");
+            wsps.connect();
+        }
+    });
+
+    wsps.subscribe("test", function (packet) {
+        results.innerText = Date.now() + ": " + JSON.stringify(packet);
+
+        events += 1;
+        if (!startTime) {
+            startTime = Date.now();
+        }
+
+        var elapsed = Date.now() - startTime;
+        var seconds = elapsed / 1000;
+
+        counter.innerText = events;
+        time.innerText = seconds;
+        eps.innerText = events / seconds;
+    });
+    wsps.connect();
+</script>
+</body>
+</html>

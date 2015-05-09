@@ -1,0 +1,33 @@
+{
+  "name": "wsps-javascript",
+  "version": "1.0.0",
+  "description": "WSPS client for JavaScript",
+  "main": "dist/wsps.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/lietu/wsps-javascript"
+  },
+  "author": "Janne Enberg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lietu/wsps-javascript/issues"
+  },
+  "homepage": "https://github.com/lietu/wsps-javascript",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
+    "gulp-qunit": "^1.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-watch": "^4.2.4",
+    "mocha": "^2.2.4",
+    "ws": "^0.7.1"
+  }
+}

@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WSPS Sender test</title>
+    <style>
+    </style>
+</head>
+<body>
+<h1>Sender for throughput testing</h1>
+<div class="stats">
+    <div class="counter">
+        <span class="label">Messages sent:</span>
+        <span id="count">0</span>
+    </div>
+    <div class="timer">
+        <span class="label">Time elapsed:</span>
+        <span id="time">0</span> sec
+    </div>
+    <div class="eps">
+        <span class="label">Messages per second:</span>
+        <span id="eps">0</span>
+    </div>
+</div>
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+
+<script src="../dist/wsps.js"></script>
+<script>
+    var results = document.getElementById("results");
+    var counter = document.getElementById("count");
+    var time = document.getElementById("time");
+    var eps = document.getElementById("mps");
+
+    var start = document.getElementById("start");
+    var stop = document.getElementById("stop");
+
+    var startTime = Date.now();
+    var events = 0;
+    var running = false;
+
+    var wsps = WSPS.create({
+        server: "ws://localhost:52525",
+        debug: true,
+        onclose: function() {
+            console.log("Lost connection, reconnecting.");
+            wsps.connect();
+        }
+    });
+
+    var send = function () {
+        events += 1;
+        wsps.publish("test", events);
+
+        var elapsed = Date.now() - startTime;
+        var seconds = elapsed / 1000;
+
+        counter.innerText = events;
+        time.innerText = seconds;
+        eps.innerText = events / seconds;
+
+        if (running) {
+            setTimeout(send, 0);
+        }
+    };
+
+    wsps.connect();
+
+    var startClick = function () {
+        startTime = Date.now();
+        if (!running) {
+            running = true;
+            send();
+        }
+    };
+
+    var stopClick = function () {
+        running = false;
+    };
+
+    start.addEventListener("click", startClick);
+    stop.addEventListener("click", stopClick)
+</script>
+</body>
+</html>

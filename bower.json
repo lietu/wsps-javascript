@@ -1,0 +1,25 @@
+{
+  "name": "WSPS",
+  "main": "dist/wsps.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/lietu/wsps-javascript",
+  "authors": [
+    "Janne Enberg"
+  ],
+  "description": "JavaScript client for WSPS server",
+  "keywords": [
+    "wsps",
+    "websocket"
+  ],
+  "license": "MIT and new BSD",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+  }
+}
