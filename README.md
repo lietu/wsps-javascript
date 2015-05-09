@@ -97,7 +97,7 @@ The config object you give to `WSPS.create` can have the following properties:
  
 Here's per-method documentation for the library.
 
-**WSPS.create**
+**WSPS.create(config)**
 
 Creates a new instance of a WSPS connection. You generally can only have one connection per destination address.
 
@@ -108,17 +108,17 @@ Arguments:
 Returns a configured instance of the WSPS client.
 
 
-**instance.connect**
+**instance.connect()**
 
 Attempts to connect to the server, if connection fails the onclose callback is called. If connection is successful the onconnect callback is called.
 
 
-**instance.disconnect**
+**instance.disconnect()**
 
 Disconnects from the server, calls the onclose callback.
 
 
-**instance.publish**
+**instance.publish(channel, data[, key])**
 
 Publish a message to a channel.
 
@@ -131,7 +131,7 @@ Arguments:
 Returns false if that failed due to e.g. connection not being established yet, true if the message was successfully published.
 
 
-**instance.subscribe**
+**instance.subscribe(channel, callback[, key])**
 
 Subscribe to messages from a channel.
 
@@ -155,6 +155,7 @@ All the dependencies can be easily installed npm and bower, but you'll need gulp
 
 ```
 npm install -g gulp bower
+npm install
 bower install
 ```
 
@@ -167,4 +168,3 @@ To lint, concatenate, minify, run tests, and watch for changes just run gulp:
 ```
 gulp
 ```
-
