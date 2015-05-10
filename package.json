@@ -1,5 +1,5 @@
 {
-  "name": "wsps-javascript",
+  "name": "wsps",
   "version": "1.0.0",
   "description": "WSPS client for JavaScript",
   "main": "dist/wsps.js",
