@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>WSPS latency test</title>
+    <title>WSPS reconnection test</title>
     <style>
         .stats {
             padding-bottom: 15px;
@@ -16,11 +16,11 @@
     </style>
 </head>
 <body>
-<h1>Message latency tester</h1>
-<p><a href="latency.html" target="_new">Open another</a></p>
+<h1>Reconnection tester</h1>
+
 <div class="stats">
     <div class="counter">
-        <span class="label">Messages received:</span>
+        <span class="label">Reconnections:</span>
         <span id="count">0</span>
     </div>
     <div class="timer">
@@ -28,7 +28,7 @@
         <span id="time">0</span> sec
     </div>
     <div class="mps">
-        <span class="label">Messages per second:</span>
+        <span class="label">Connections per second:</span>
         <span id="mps">0</span>
     </div>
     <div class="latency-avg">
@@ -47,44 +47,13 @@ Last message:
     var mps = document.getElementById("mps");
     var latency = document.getElementById("latency");
 
-    var startTime = null;
+    var startTime = Date.now();
+    var reconnectStart = Date.now();
     var events = 0;
     var avg = 0;
-    var pingSent = null;
 
-    var wsps = WSPS.create({
-        server: "ws://localhost:52525",
-        debug: true,
-        onclose: function() {
-            console.log("Lost connection, reconnecting.");
-            wsps.connect();
-        }
-    });
-
-    var channel = "ping-" + Math.random() * 10000000;
-
-    var send = function() {
-        pingSent = Date.now();
-        if (!startTime) {
-            startTime = Date.now();
-        }
-
-        if (!wsps.publish(channel, "")) {
-            setTimeout(send, 1);
-        }
-    };
-
-    var round = function(value) {
-        var decimals = 3;
-        var pow = Math.pow(10, decimals);
-
-        return Math.round(value * pow) / pow;
-    };
-
-    wsps.subscribe(channel, function (packet) {
-        results.innerText = Date.now() + ": " + JSON.stringify(packet);
-
-        var elapsed = Date.now() - pingSent;
+    var stats = function () {
+        var elapsed = Date.now() - reconnectStart;
         var seconds = (Date.now() - startTime) / 1000;
         var total = avg * events + elapsed;
 
@@ -95,13 +64,30 @@ Last message:
         time.innerText = seconds;
         mps.innerText = round(events / seconds);
         latency.innerText = round(avg);
+    };
 
-        send();
+    var wsps = WSPS.create({
+        server: "ws://localhost:52525",
+        debug: true,
+        onconnect: function () {
+            stats();
+            wsps.disconnect();
+        },
+        onclose: function () {
+            console.log("Lost connection, reconnecting.");
+            reconnectStart = Date.now();
+            wsps.connect();
+        }
     });
 
-    wsps.connect();
+    var round = function (value) {
+        var decimals = 3;
+        var pow = Math.pow(10, decimals);
 
-    send();
+        return Math.round(value * pow) / pow;
+    };
+
+    wsps.connect();
 </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ if (typeof require !== "undefined") {
     var expect = require("expect.js");
 }
 
+// TODO: Actually mock something
 describe("Mock tests", function () {
 
     it('Connection events are handled correctly', function (done) {

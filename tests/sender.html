@@ -7,6 +7,8 @@
 </head>
 <body>
 <h1>Sender for throughput testing</h1>
+<p><a href="sender.html" target="_new">Open another</a></p>
+<p><a href="listener.html" target="_new">Open listener</a></p>
 <div class="stats">
     <div class="counter">
         <span class="label">Messages sent:</span>
@@ -16,9 +18,9 @@
         <span class="label">Time elapsed:</span>
         <span id="time">0</span> sec
     </div>
-    <div class="eps">
+    <div class="mps">
         <span class="label">Messages per second:</span>
-        <span id="eps">0</span>
+        <span id="mps">0</span>
     </div>
 </div>
 <button id="start">Start</button>
@@ -29,7 +31,7 @@
     var results = document.getElementById("results");
     var counter = document.getElementById("count");
     var time = document.getElementById("time");
-    var eps = document.getElementById("mps");
+    var mps = document.getElementById("mps");
 
     var start = document.getElementById("start");
     var stop = document.getElementById("stop");
@@ -56,7 +58,7 @@
 
         counter.innerText = events;
         time.innerText = seconds;
-        eps.innerText = events / seconds;
+        mps.innerText = events / seconds;
 
         if (running) {
             setTimeout(send, 0);

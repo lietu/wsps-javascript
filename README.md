@@ -18,6 +18,8 @@ For browsers this is standalone and has no dependencies other than if you want t
 
 The library also works on Node.js, but it uses the `ws` -library for WebSocket support.
 
+For WSS (SSL-protected WebSocket) you should terminate SSL with something like Nginx.
+
 
 ## Performance
 
@@ -47,7 +49,7 @@ PUBLISH_KEYS = {
     r"some-channel": "publish-key"
 }
 
-AUTHORIZATION_MANAGER = 'wspsserver.auth.settings'
+AUTHORIZATION_MANAGER = 'wspsserver.auth:SettingsAuthManager'
 ```
 
 After that, this code should work in a browser with WSPS script loaded:
