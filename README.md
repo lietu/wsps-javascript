@@ -75,6 +75,8 @@ wsps.connect();
 var send = function() {
     wsps.publish("some-channel", {msg: "Hello, WSPS!"}, writeKey);
 };
+
+setTimeout(send, 2500);
 ```
 
 In Node.js you only need to prepend:
