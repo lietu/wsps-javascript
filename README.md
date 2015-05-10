@@ -32,6 +32,19 @@ Keep in mind these are over *localhost*, real world performance will be differen
 
 ## Usage
 
+### How to get it
+
+With Bower:
+```
+bower install wsps
+```
+
+Or NPM:
+```
+npm install wsps
+```
+
+
 ### Example
 
 This example assumes the WSPS server is running at localhost:52525.
