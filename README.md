@@ -65,19 +65,16 @@ var wsps = WSPS.create({
     }
 });
 
-wsps.connect();
-
 var receive = function(packet) {
     console.log(packet.data.msg);
 };
 
-var send = function() {
-    wsps.send("some-channel", {msg: "Hello, WSPS!"}, writeKey);
-};
+wsps.subscribe("some-channel", receive, subscribeKey);
+wsps.connect();
 
-wsps.listen("some-channel", receive, subscribeKey);
- 
-setTimeout(send, 2500);
+var send = function() {
+    wsps.publish("some-channel", {msg: "Hello, WSPS!"}, writeKey);
+};
 ```
 
 In Node.js you only need to prepend:
